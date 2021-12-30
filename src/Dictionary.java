@@ -1,5 +1,4 @@
 import java.util.*;
-import java.security.SecureRandom;
 import java.io.*;
 
 /**
@@ -7,31 +6,31 @@ import java.io.*;
  * 
  * 
  * @author Bobby Gabriel
- *@version 1.0
+ *@version 2.0
  *Programming Project 1
  *Spring/2020
  */
 
 public class Dictionary {
 
-	private String[] wordList = new String[200];
-	private SecureRandom randomNumbers;
-	
+	private ArrayList<String> wordList = new ArrayList<>();
+	File dictionary = new File ("/Users/bobby/Desktop/Bellarmine/CS131/Hangman_BWG/src/hangman.txt");
 	
 	public Dictionary() throws IOException {
 		readFile();
 		
 	}//end empty argument constructor
+	@SuppressWarnings("resource")
 	private void readFile()throws IOException {
-		Scanner scan = new Scanner (new File("hangman.txt"));
-		for(int i = 0; i<200; i++) {
-			wordList[i] = scan.next();
+		Scanner text = new Scanner(dictionary);
+		while(text.hasNextLine()){
+			wordList.add(text.nextLine());
 		}
 		
 	}//end readFile
 	public String chooseWord() throws IOException{
-		int i = randomNumbers.nextInt(200);
-		return wordList[i];
+		String userWord = wordList.get((int)(Math.random()*wordList.size()));
+		return userWord;
 	}//end chooseWord
 	//chooses a word from file and returns it
 	
