@@ -6,15 +6,15 @@ import java.io.*;
  * 
  * 
  * @author Bobby Gabriel
- *@version 2.0
- *Programming Project 1
- *Spring/2020
+ * @version 2.0
+ * Hangman
+ * 2021
  */
 
 public class Dictionary {
 
 	private ArrayList<String> wordList = new ArrayList<>();
-	File dictionary = new File ("/Users/bobby/Desktop/Bellarmine/CS131/Hangman_BWG/src/hangman.txt");
+	File dictionary = new File ("/Users/bobby/Desktop/Programming/Hangman_BWG/src/hangman.txt");
 	
 	public Dictionary() throws IOException {
 		readFile();

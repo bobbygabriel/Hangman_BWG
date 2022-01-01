@@ -19,6 +19,7 @@ public class Hangman {
 	private String player;
 	private int guesses = 5;
 	private Dictionary dictionary = new Dictionary();// 
+	LinkedList<Character> wordBank = new LinkedList<>();
 	
 	
 	Scanner scan = new Scanner(System.in);
@@ -37,10 +38,13 @@ public class Hangman {
 		System.out.print("Do you want to play Hangman? y/n:");
 		player = scan.next();
 	}
+	
 	public void playGame() throws IOException {
+		String currentWord = dictionary.chooseWord();
+		//System.out.println(currentWord);
+		
 		if (player.equalsIgnoreCase("y")){
-			String currentWord = dictionary.chooseWord();
-			System.out.println(currentWord);
+			System.out.println("Welcome to Hangman!");
 			String guessedLetters[] = new String[currentWord.length()];
 			boolean won = false;
 			
@@ -59,15 +63,27 @@ public class Hangman {
 				System.out.print("What is your guess? ");
 				char guess = scan.next().charAt(0);
 				
+				if(wordBank.contains(guess)) {
+					System.out.println("You have already guessed that letter. Choose a different letter.");
+					wordBank.removeFirstOccurrence(guess);
+				}
+				
+				
 				for (int i =0; i<currentWord.length(); i++) {
 					if (Character.compare(guess,currentWord.charAt(i))==0) {
 						guessedLetters[i] = String.valueOf(guess);
 						correct = true;
+						wordBank.add(guess);
+						System.out.println("Guessed Letters: "+ wordBank.toString());
 					}//end if
+						
+					
 				}//end for
 			
 				if (!correct) {
 					guesses--;
+					wordBank.add(guess);
+					System.out.println("Guessed Letters: "+ wordBank.toString() + "\n");
 				}//end if
 				
 				String guessedWord = " ";
@@ -84,37 +100,35 @@ public class Hangman {
 					WL();
 				}//end if
 				
-				
 				if(guesses<=0) {
+					System.out.println("\nLoser!");
+					System.out.println("The correct word was: "+ currentWord);
 					losses++;
-					//for(int i = 0; i<guessedLetters.length; i++) {
-						//System.out.print(guessedLetters[i] + "");
-					//}//end for
-				System.out.println("\nLoser!");
-				System.out.println("The correct word was: "+ currentWord);
-				WL();
+					WL();
 				}//end if
+				
 			}//end while
-		}//end if
-		else if(player.equalsIgnoreCase("n")) {
-			System.out.println("go fuck yourself\n");
 			
-		}
-		System.out.println("\nDo you wish to try again? y/n:");
-		player = scan.next();
-		if (player.equalsIgnoreCase("y")) {
+			System.out.println("Do you wish to try again? ");
+			player = scan.next();
+			guesses = 5;
+			wordBank.clear();
 			playGame();
-		}
-		else if (player.equalsIgnoreCase("n")) {
-			WL();
-			System.out.println("Goodbye");
-		}
+		}//end if
+		
+		else if(player.equalsIgnoreCase("n")) {
+			System.out.println("Goodbye\n");
+		}//end else if
+		
+		
+		else {
+			System.out.println("Error: Please enter y or n: ");
+			player = scan.next();
+			playGame();
+		}//end else
+		
 	}//end playGame
 	//playGame is the major component to the Hangman Game itself. What you need to play the actual game.
 	
-	public String toString() {
-		return "Hangman [wins=" + wins + ", losses=" + losses + "]";
-	}//end toString
-	//prints the total wins and losses
 	
 }//end Hangman
