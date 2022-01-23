@@ -13,8 +13,9 @@ import java.io.*;
 
 public class Dictionary {
 
+	//turning dictionary file into an arraylist so the Scanner can read each String.
 	private ArrayList<String> wordList = new ArrayList<>();
-	File dictionary = new File ("/Users/bobby/Desktop/Programming/Hangman_BWG/src/hangman.txt");
+	File dictionary = new File ("hangman.txt");
 	
 	public Dictionary() throws IOException {
 		readFile();
@@ -25,15 +26,15 @@ public class Dictionary {
 		Scanner text = new Scanner(dictionary);
 		while(text.hasNextLine()){
 			wordList.add(text.nextLine());
-		}
+		}//end while
 		
 	}//end readFile
+	
+	//chooses a random word from the dictionary file and returns it
 	public String chooseWord() throws IOException{
 		String userWord = wordList.get((int)(Math.random()*wordList.size()));
 		return userWord;
 	}//end chooseWord
-	//chooses a word from file and returns it
 	
 
-	
 }//end Dictionary
